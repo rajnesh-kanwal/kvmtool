@@ -11,6 +11,7 @@ struct kvm_config_arch {
 	bool		ext_disabled[KVM_RISCV_ISA_EXT_MAX];
 	bool		sbi_ext_disabled[KVM_RISCV_SBI_EXT_MAX];
 	bool		tee_vm;
+	bool		virtio_trans_pci;
 };
 
 #define OPT_ARCH_RUN(pfx, cfg)						\
@@ -68,6 +69,9 @@ struct kvm_config_arch {
 	OPT_BOOLEAN('\0', "disable-sbi-vendor",				\
 		    &(cfg)->sbi_ext_disabled[KVM_RISCV_SBI_EXT_VENDOR],	\
 		    "Disable SBI Vendor Extensions"),			\
-	OPT_BOOLEAN('\0', "tee-vm", &(cfg)->tee_vm, "TEE VM"),
+	OPT_BOOLEAN('\0', "tee-vm", &(cfg)->tee_vm, "TEE VM"),		\
+	OPT_BOOLEAN('\0', "force-pci", &(cfg)->virtio_trans_pci,	\
+		    "Force virtio devices to use PCI as their default "	\
+		    "transport"),
 
 #endif /* KVM__KVM_CONFIG_ARCH_H */

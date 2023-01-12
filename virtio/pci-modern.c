@@ -148,7 +148,15 @@ static bool virtio_pci__common_read(struct virtio_device *vdev,
 {
 	u32 val;
 	struct virtio_pci *vpci = vdev->virtio;
-	u64 features = 1ULL << VIRTIO_F_VERSION_1;
+	u64 features = (1ULL << VIRTIO_F_VERSION_1) | (1ULL << VIRTIO_F_ACCESS_PLATFORM);
+
+	/* TEE VMs mandate VIRTIO_F_ACCESS_PLATFORM feature to force use of
+	 * SWIOTLB bounce buffers through DMA API. Without this device probe
+	 * will fail for TEE VMs.
+	 */
+	if (vpci->kvm->cfg.arch.tee_vm) {
+		features |= (1ULL << VIRTIO_F_ACCESS_PLATFORM);
+	}
 
 	switch (offset - VPCI_CFG_COMMON_START) {
 	case VIRTIO_PCI_COMMON_DFSELECT:

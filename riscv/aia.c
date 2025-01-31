@@ -9,7 +9,7 @@
 
 static int aia_fd = -1;
 
-static u32 aia_mode = KVM_DEV_RISCV_AIA_MODE_EMUL;
+static u32 aia_mode = KVM_DEV_RISCV_AIA_MODE_AUTO;
 static struct kvm_device_attr aia_mode_attr = {
 	.group	= KVM_DEV_RISCV_AIA_GRP_CONFIG,
 	.attr	= KVM_DEV_RISCV_AIA_CONFIG_MODE,
